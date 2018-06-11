@@ -1,0 +1,113 @@
+layui.use(['form','element','layer'], function(){
+    var form = layui.form;
+    var element = layui.element;
+    var layer = layui.layer;
+
+    //监听提交
+    form.on('submit(subLogin)', function(data){
+        $.ajax({
+            method: 'POST',
+            url: "subLogin",
+            data: {
+                userName: data.field.username,
+                passWord: data.field.password,
+                rememberMe: data.field.rememberMe
+            },
+            type: "POST",
+            success: function(response){
+                if(response.errNo == 0){
+                    alert("成功!", response.errMsg, "success")
+                    $("#msg").val("");
+                }else {
+                    alert("失败!", response.errMsg, "error")
+                }
+            },
+            error: function () {
+                alert("发送失败", "系统内部错误！", "error");
+            }
+        });
+        return false;
+    });
+
+});
+
+//// 初始化验证
+//$('#loginForm').validator({
+//    timely: 3,
+//    theme: 'yellow_top',
+//    fields: {
+//        'userName': '用户名:required',
+//        'passWord': '密码:required'
+//    }
+//});
+//angular.module('loginApp', ['ngRoute'])
+//    .controller('loginCtrl', function($scope, $http) {
+//        $scope.login = function() {
+//            $('#loginForm').isValid(function() {
+//                $http({
+//                    method: 'POST',
+//                    url: 'subLogin',
+//                    data: {
+//                        userName: $scope.user.userName,
+//                        passWord: $scope.user.passWord,
+//                        rememberMe: $scope.user.rememberMe
+//                    }
+//                }).then(function successCallback(response) {
+//                    if(response.data.errNo == 0){
+//                        window.location.href="admin";
+//                    }else{
+//                        $("#message").text(response.data.errMsg);
+//                    }
+//                }, function errorCallback(response) {
+//                    // 请求失败执行代码
+//                    $("#message").text("请求异常");
+//                });
+//            });
+//        }
+//    });
+//
+////js方式
+//
+////var $btnLogin = $('#btnLogin');
+////
+////$btnLogin.click(function () {
+////    $('#loginForm').isValid(function() {
+////        //全局rootScope
+////        var userName = $("#inputUser").val();
+////        var passWord = $("#inputPassword").val();
+////        var rememberMe = $("#rememberMe").prop('checked');
+////        //发送ajax请求
+////        $.ajax({
+////            url: '/admin/index',
+////            type: 'POST',
+////            data: {
+////                userName: userName,
+////                passWord: passWord,
+////                rememberMe: rememberMe
+////            },
+////            success: function (data) {
+////
+////                if (data.errNo == 0) {
+////                    $("#btnLogin").addClass("disabled");
+////                    var time = 3;
+////                    var timer = setInterval(function () {
+////                        var msg = "登录成功，将在" + time + "秒后跳转到主页面";
+////                        $("#message").text(msg);
+////                        time--;
+////                        if (time==0) {
+////                            clearInterval(timer);
+////                            window.location.href="/admin";
+////                        }
+////                    }, 1000);
+////                } else {
+////                    $("#message").text(data.errMsg);
+////                }
+////            },
+////            error: function (data) {
+////                console.log(data);
+////                $("#message").text("登录出错，请稍后再试！");
+////            }
+////        });
+////    });
+////});
+////

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.linn.home.dao.UserDao">
+    <resultMap id="userResultMap" type="com.linn.home.entity.User">
+        <id property="id" column="id" />
+        <result property="userName" column="user_name"/>
+        <result property="passWord" column="pass_word"/>
+        <result property="gmtCreate" column="gmt_create"/>
+        <result property="gmtModified" column="gmt_modified"/>
+    </resultMap>
+
+    <select id="findUserByName" resultMap="userResultMap">
+        SELECT id,user_name,pass_word,gmt_create,gmt_modified
+        FROM blog_user
+        WHERE 1=1
+        AND user_name = #{userName}
+    </select>
+
+    <select id="findUserById"  parameterType="int" resultMap="userResultMap">
+        SELECT id,user_name,pass_word,gmt_create,gmt_modified
+        FROM blog_user
+        WHERE 1=1
+        AND id = #{userId}
+    </select>
+
+    <select id="findUserByNameAndPwd" resultMap="userResultMap">
+        SELECT id,user_name,pass_word,gmt_create,gmt_modified
+        FROM blog_user
+        WHERE 1=1
+        AND user_name = #{userName}
+        AND pass_word = #{passWord}
+    </select>
+
+    <insert id="addUser"  keyProperty="id">
+        INSERT INTO blog_user (user_name, pass_word)
+        VALUES (#{userName}, #{passWord})
+    </insert>
+
+    <select id="findUserList" resultMap="userResultMap">
+        SELECT id,user_name,pass_word,gmt_create,gmt_modified
+        FROM blog_user
+        ORDER BY id DESC
+    </select>
+
+    <update id="updateUserByUserName">
+        UPDATE blog_user
+        SET pass_word  = #{passWord},gmt_modified = #{gmtModified}
+        WHERE user_name = #{userName}
+    </update>
+
+    <delete id="deleteUserById">
+        DELETE FROM blog_user
+        WHERE id = #{id}
+    </delete>
+
+    <!--根据用户名查找拥有的所有角色-->
+    <select id="getRolesByUsername" parameterType="String" resultType="String">
+        SELECT role_name
+        FROM  blog_user_roles
+        WHERE user_name = #{userName}
+    </select>
+
+    <!--根据角色名查找拥有的所有权限-->
+    <select id="getPermisionByUsername" parameterType="String" resultType="String">
+        SELECT permission
+        FROM blog_roles_permissions rp
+        JOIN blog_user_roles ur
+        ON rp.role_name = ur.role_name
+        WHERE ur.user_name ="001";
+    </select>
+
+    <!--根据用户名查找密码-->
+    <select id="getPasswordByUsername" resultMap="userResultMap">
+        SELECT pass_word
+        FROM blog_user t
+        WHERE t.user_name = #{userName}
+    </select>
+</mapper>
