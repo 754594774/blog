@@ -94,7 +94,7 @@ public class ArticleController extends BaseController {
             }
             if (!StringUtils.isEmpty(searchContent)) {
                 String strSearch = new String(searchContent.getBytes("ISO-8859-1"), "UTF-8");
-                model.addAttribute("searchContent", searchContent);
+                model.addAttribute("searchContent", strSearch);
             }
         } catch (UnsupportedEncodingException e) {
             logger.error(e.getMessage(), e);

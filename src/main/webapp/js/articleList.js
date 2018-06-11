@@ -11,7 +11,7 @@ layui.use('flow', function(){
             var categoryId = document.getElementById("categoryId");
             var date = document.getElementById("date");
             var searchContent = document.getElementById("searchContent");
-            var url = '/getArticleListData?pageNum=' + page +
+            var url = 'getArticleListData?pageNum=' + page +
                 '&categoryId=' + categoryId.value +
                 '&date=' + date.value +
                 '&searchContent=' + searchContent.value;
@@ -19,7 +19,7 @@ layui.use('flow', function(){
             $.get(url, function(res){
                 //假设你的列表返回在data集合中
                 layui.each(res.list, function(index, item){
-                    var url = "javascript:jump(\"/toArticleDetail?articleId=" + item.id + "\",1);";
+                    var url = "javascript:jump(\"toArticleDetail?articleId=" + item.id + "\",1);";
                     lis.push(
                         "<li>" +
                         "<a href=" + url + " class=\"fly-avatar\">" +

@@ -6,14 +6,14 @@ function jump(url,type) {
         if(type == 0){//ifrmae所在页面调用
             webApp = document.getElementById("webApp");
             frame = document.getElementById(iframeId);
-            frame.src = webApp.value + url;
+            frame.src = url;
             //setIframeHeight();
         }
         if(type== 1){//iframe子页面调用
             webApp = parent.document.getElementById("webApp");
             frame = parent.document.getElementById(iframeId);
-            frame.src = webApp.value + url;
-            //setParentIframeHeight();
+            frame.src = url;
+            setParentIframeHeight();
         }
 
     }

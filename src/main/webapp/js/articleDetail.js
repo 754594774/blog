@@ -178,8 +178,7 @@ function initCommentEvent() {
         var name = box.getElementsByClassName("layui-input")[0].value;
         var contactInfo = box.getElementsByClassName("layui-input")[1].value;
         if(!name || !contactInfo ){
-            alert("姓名和联系方式不能为空!");
-            // /swal("提示!", "姓名和联系方式不能为空!", "warning");
+            layer.alert("姓名和联系方式不能为空", {icon: 0,closeBtn: 2,offset: 'b'});
             return;
         }
         //获取评论框
@@ -211,11 +210,12 @@ function initCommentEvent() {
                 if(data.errNo == 0){
                     //swal("成功!", "添加评论成功:)!", "success")
                 }else {
-                    swal("失败!", data.errMsg, "error")
+                    //swal("失败!", data.errMsg, "error")
+                    layer.alert("评论失败", {icon: 2,closeBtn: 2});
                 }
             },
             error: function () {
-                swal("评论失败", "添加评论时出错了！", "error");
+                layer.alert("评论请求异常", {icon: 2,closeBtn: 2});
             }
         });
         //初始化pid

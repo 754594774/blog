@@ -15,12 +15,12 @@
 <body>
 <div class="fly-header layui-bg-black">
     <div class="layui-container">
-        <a class="fly-logo" href="/">
-            <img src="/resources/images/logo.png" alt="layui">
+        <a class="fly-logo" href="javascript:jump('toArticleList',0);">
+            <img src="resources/images/logo.png" alt="layui">
         </a>
         <ul class="layui-nav fly-nav layui-hide-xs" lay-filter="">
             <li class="layui-nav-item layui-this">
-                <a href="javascript:jump('/contactMe',0);">
+                <a href="javascript:jump('contactMe',0);">
                     <i class="iconfont icon-jiaoliu"></i>联系我
                 </a>
             </li>
@@ -30,7 +30,7 @@
                 <div class="layui-container">
                     <div class="fly-column-right layui-hide-xs">
                         <div class="layui-form-item">
-                            <input type="text" name="searchContent" placeholder="请输入关键字..." autocomplete="off">
+                            <input type="text" id="searchContent" name="searchContent" placeholder="请输入标题或作者..." autocomplete="off">
                             <span class="fly-search"><i class="layui-icon"></i></span>
                         </div>
                     </div>
@@ -44,9 +44,9 @@
 
 <div class="layui-container">
     <div class="layui-row layui-col-space15">
-        <div class="layui-col-md8">
-            <IFRAME border=0 marginWidth=0 frameSpacing=0 marginHeight=0 src="toArticleList" frameBorder=0
-                    noResize scrolling="no" width=100% height=100% vspale="0" id="mainFrame" name="mainFrame"></IFRAME>
+        <div class="layui-col-md8" style="height: 100%">
+                <IFRAME border=0 marginWidth=0 frameSpacing=0 marginHeight=0 src="toArticleList" frameBorder=0
+                        noResize scrolling="no" width=100% height=100% vspale="0" id="mainFrame" name="mainFrame"></IFRAME>
         </div>
         <div class="layui-col-md4">
             <%--通知--%>
@@ -90,9 +90,9 @@
                 <div class="layui-card-header">友链</div>
                 <dl class="layui-card-body">
                     <c:forEach items="${links}" var="item">
-                        <dd><a href="${item.url}" target="_blank">${item.title}(${item.remark})</a><dd>
+                        <dd><a href="${item.url}" target="_blank">${item.title}</a><dd>
                     </c:forEach>
-                    <dd><a href="" class="fly-link">申请友链</a><dd>
+                    <dd><a href="javascript:applyFriendChain();" class="fly-link">申请友链</a><dd>
                 </dl>
             </div>
         </div>

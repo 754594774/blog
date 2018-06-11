@@ -66,7 +66,7 @@
 
     <div class="layui-footer" style="background-color: #c2c2c2">
         <!-- 底部固定区域 -->
-        <a href="/" target="_blank">© linn.com - lnn</a>
+        <a href="" target="_blank">© linn.com - lnn</a>
     </div>
 </div>
 <input type="hidden" id="webApp" value="${rc.contextPath}"/>

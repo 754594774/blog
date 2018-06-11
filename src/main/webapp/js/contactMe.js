@@ -1,4 +1,4 @@
-layui.use(('form'), function(){
+layui.use(['form', 'layer'], function(){
     setParentIframeHeight();
     var form = layui.form
         ,$ = layui.jquery;
@@ -14,14 +14,14 @@ layui.use(('form'), function(){
             type: "POST",
             success: function(response){
                 if(response.errNo == 0){
-                    alert("成功!", response.errMsg, "success")
+                    layer.alert(response.errMsg, {icon: 1, closeBtn: 2});
                     $("#msg").val("");
                 }else {
-                    alert("失败!", response.errMsg, "error")
+                    layer.alert(response.errMsg, {icon: 2,closeBtn: 2});
                 }
             },
             error: function () {
-                alert("发送失败", "系统内部错误！", "error");
+                layer.alert("请求异常", {icon: 2,closeBtn: 2});
             }
         });
         return false;

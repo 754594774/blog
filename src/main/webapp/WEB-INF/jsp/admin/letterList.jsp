@@ -14,13 +14,13 @@
     <div class="layui-card-body">
         <div class="layui-btn-group demoTable">
             <button class="layui-btn layui-btn-primary  layui-btn-sm" data-type="checkLetter">
-                <i class="layui-icon">&#xe60c;</i>
+                <i class="iconfont" title="查看">&#xe60b;</i>
             </button>
             <button class="layui-btn layui-btn-primary  layui-btn-sm" data-type="delLetter">
-                <i class="layui-icon">&#xe640;</i>
+                <i class="layui-icon" title="删除">&#xe640;</i>
             </button>
             <button class="layui-btn layui-btn-primary  layui-btn-sm" data-type="reload">
-                <i class="layui-icon">&#xe666;</i>
+                <i class="layui-icon" title="刷新">&#xe666;</i>
             </button>
         </div>
         <table id="letterList" lay-filter=""></table>

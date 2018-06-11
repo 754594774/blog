@@ -51,7 +51,6 @@
             <if test="searchContent != null and searchContent != ''">
                 AND a.title LIKE CONCAT('%',trim(#{searchContent}),'%')
                 OR a.author LIKE  CONCAT('%',trim(#{searchContent}),'%')
-                OR a.intro LIKE  CONCAT('%',trim(#{searchContent}),'%')
             </if>
         </where>
         ORDER BY a.is_stick DESC,a.id DESC
