@@ -106,4 +106,14 @@ public class ArticleServiceImpl implements ArticleService {
         return pageInfo;
     }
 
+    @Override
+    public void updateArticleStick(Article article) {
+        articleDao.updateArticleStick(article);
+    }
+
+    @Override
+    public void updateAllowComment(Article article) {
+        articleDao.updateAllowComment(article);
+    }
+
 }

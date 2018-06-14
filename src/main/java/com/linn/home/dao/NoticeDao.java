@@ -57,4 +57,10 @@ public interface NoticeDao {
      * @return
      */
     Notice findNoticeById(Integer noticeId);
+
+    /**
+     * 通知是否激活显示
+     * @param notice
+     */
+    void updateNotcieIsActive(Notice notice);
 }

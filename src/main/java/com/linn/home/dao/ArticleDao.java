@@ -83,4 +83,16 @@ public interface ArticleDao {
      * @return
      */
     List<Article> selectArticleBySearch(HashMap<String,Object> hashMap);
+
+    /**
+     * 修改文章置顶
+     * @param article
+     */
+    void updateArticleStick(Article article);
+
+    /**
+     * 是否允许评论
+     * @param article
+     */
+    void updateAllowComment(Article article);
 }

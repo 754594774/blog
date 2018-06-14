@@ -42,6 +42,13 @@
         WHERE id = #{id}
     </update>
 
+    <!--通过id更新通过-->
+    <update id="updateNotcieIsActive" parameterType="com.linn.home.entity.Notice">
+        UPDATE blog_notice
+        SET is_active  = #{isActive}
+        WHERE id = #{id}
+    </update>
+
     <!--根据id删除通知-->
     <delete id="deleteNoticeById">
         DELETE FROM blog_notice WHERE id = #{id}

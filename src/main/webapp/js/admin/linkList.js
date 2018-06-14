@@ -15,7 +15,7 @@ layui.use(['table','layer'], function(){
             ,{field: 'id', title: 'ID',  sort: true}
             ,{field: 'title', title: '标题'}
             ,{field: 'url', title: '作者'}
-            ,{field: 'remark', title: '置顶'}
+            ,{field: 'remark', title: '备注'}
             ,{field: 'gmtCreate', title: '创建时间', sort: true}
             ,{field: 'gmtModified', title: '修改时间', sort: true}
         ]]

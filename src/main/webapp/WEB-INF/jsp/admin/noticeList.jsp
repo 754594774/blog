@@ -27,6 +27,9 @@
                 </button>
             </div>
             <table id="noticeList" lay-filter=""></table>
+            <script type="text/html" id="isActiveTpl">
+                <input type="checkbox" name="isActive" value="{{d.id}}" title="显示" lay-filter="activeDemo" {{ d.isActive == 1 ? 'checked' : '' }}>
+            </script>
         </div>
     </div>
 </body>

@@ -207,6 +207,32 @@ public class ArticleController extends BaseController {
     }
 
     /**
+     * 是否置顶
+     * @param article
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("admin/updateArticleStick")
+    public ResultBean updateArticleStick(Article article){
+
+        articleService.updateArticleStick(article);
+        return new ResultBean(SysContent.SUCCESS, "修改成功");
+    }
+
+    /**
+     * 是否允许评论
+     * @param article
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("admin/updateAllowComment")
+    public ResultBean updateAllowComment(Article article){
+
+        articleService.updateAllowComment(article);
+        return new ResultBean(SysContent.SUCCESS, "修改成功");
+    }
+
+    /**
      * 跳转到文章详情页面
      *
      * @param articleId
@@ -215,7 +241,7 @@ public class ArticleController extends BaseController {
      * @throws Exception
      */
     @RequestMapping("/toArticleDetail")
-    private String toArticleDetail(@RequestParam(value = "articleId") Integer articleId, Model model) {
+    public String toArticleDetail(@RequestParam(value = "articleId") Integer articleId, Model model) {
 
         if (articleId != null) {
             Article article = articleService.selectArticleById(articleId);

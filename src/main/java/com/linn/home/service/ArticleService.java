@@ -30,4 +30,8 @@ public interface ArticleService {
     int updateArticle(Article article);
 
     PageInfo selectArticleBySearch(String searchContent,PageInfo page);
+
+    void updateArticleStick(Article article);
+
+    void updateAllowComment(Article article);
 }

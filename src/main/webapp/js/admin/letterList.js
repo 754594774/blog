@@ -1,6 +1,7 @@
-layui.use(['table','layer'], function(){
+layui.use(['table','layer','form'], function(){
     var table = layui.table;
     var layer = layui.layer;
+    var form = layui.form;
     var $ = layui.jquery;
     //第一个实例
     var tableIns = table.render({
@@ -13,7 +14,7 @@ layui.use(['table','layer'], function(){
             {type:'checkbox'}
             ,{field: 'id', title: 'ID',  sort: true}
             ,{field: 'userName', title: '发件人'}
-            ,{field: 'viewStatus', title: '查阅状态'}
+            ,{field: 'viewStatus', title: '查阅状态', templet: '#stateTpl'}
             ,{field: 'gmtCreate', title: '创建时间', sort: true}
             ,{field: 'gmtModified', title: '修改时间', sort: true}
         ]]

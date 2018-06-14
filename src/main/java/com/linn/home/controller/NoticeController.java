@@ -105,4 +105,12 @@ public class NoticeController extends BaseController {
         return new ResultBean(SysContent.SUCCESS,"删除成功");
     }
 
+
+    @ResponseBody
+    @RequestMapping("admin/updateNotcieIsActive")
+    public ResultBean updateNotcieIsActive(Notice notice){
+
+        noticeService.updateNotcieIsActive(notice);
+        return new ResultBean(SysContent.SUCCESS,"修改成功");
+    }
 }

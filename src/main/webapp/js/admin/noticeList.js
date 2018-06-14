@@ -1,6 +1,7 @@
-layui.use(['table','layer'], function(){
+layui.use(['table','layer','form'], function(){
     var table = layui.table;
     var layer = layui.layer;
+    var form = layui.form;
     var $ = layui.jquery;
 
     //第一个实例
@@ -18,7 +19,7 @@ layui.use(['table','layer'], function(){
             ,{field: 'content', title: '备注'}
             ,{field: 'gmtCreate', title: '创建时间', sort: true}
             ,{field: 'gmtModified', title: '修改时间', sort: true}
-            ,{field: 'isActive', title: '是否显示'}
+            ,{field: 'isActive', title: '是否显示',templet: '#isActiveTpl'}
         ]]
     });
 
@@ -94,6 +95,36 @@ layui.use(['table','layer'], function(){
     $('.demoTable .layui-btn').on('click', function(){
         var type = $(this).data('type');
         active[type] ? active[type].call(this) : '';
+    });
+
+
+    //监听置顶操作
+    form.on('checkbox(activeDemo)', function(obj){
+        //layer.tips(this.value + ' ' + this.name + '：'+ obj.elem.checked, obj.othis);
+
+        var isActive;
+        if(obj.elem.checked){
+            isActive = 1;//置顶
+        }else{
+            isActive = 0;//取消置顶
+        }
+
+        $.ajax({
+            url: 'admin/updateNotcieIsActive',
+            type: 'POST',
+            traditional:true,
+            data:{
+                "id":this.value,
+                "isActive":isActive
+            },
+            success: function (data) {
+                layer.tips(data.errMsg,obj.othis);
+            },
+            error: function () {
+                layer.tips("请求失败！",obj.othis);
+            }
+        });
+
     });
 
 });

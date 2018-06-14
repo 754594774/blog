@@ -24,6 +24,14 @@
             </button>
         </div>
         <table id="letterList" lay-filter=""></table>
+
+        <script type="text/html" id="stateTpl">
+            {{#  if(d.viewStatus === 1){ }}
+            <span class="layui-badge layui-bg-gray">已读</span>
+            {{#  } else { }}
+            <span class="layui-badge layui-bg-orange">未读</span>
+            {{#  } }}
+        </script>
     </div>
 </div>
 </body>

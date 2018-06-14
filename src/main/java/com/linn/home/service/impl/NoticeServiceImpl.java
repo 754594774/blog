@@ -50,4 +50,9 @@ public class NoticeServiceImpl implements NoticeService {
     public Notice findNoticeById(Integer noticeId) {
         return noticeDao.findNoticeById(noticeId);
     }
+
+    @Override
+    public void updateNotcieIsActive(Notice notice) {
+        noticeDao.updateNotcieIsActive(notice);
+    }
 }

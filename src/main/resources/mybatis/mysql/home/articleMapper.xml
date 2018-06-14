@@ -94,4 +94,18 @@
     <delete id="deleteArticleById" parameterType="com.linn.home.entity.Article">
         DELETE FROM blog_article WHERE id = #{id}
     </delete>
+
+    <!--更改文章置顶状态-->
+    <update id="updateArticleStick" parameterType="com.linn.home.entity.Article">
+        UPDATE blog_article
+        SET is_stick = #{isStick}
+        WHERE id = #{id}
+    </update>
+
+    <!--更改文章置顶状态-->
+    <update id="updateAllowComment" parameterType="com.linn.home.entity.Article">
+        UPDATE blog_article
+        SET allow_comment = #{allowComment}
+        WHERE id = #{id}
+    </update>
 </mapper>

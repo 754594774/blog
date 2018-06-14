@@ -1,6 +1,7 @@
-layui.use(['table','layer'], function(){
+layui.use(['table','layer','form'], function(){
     var table = layui.table;
     var layer = layui.layer;
+    var form = layui.form;
     var $ = layui.jquery;
 
     //第一个实例
@@ -15,8 +16,8 @@ layui.use(['table','layer'], function(){
             ,{field: 'id', title: 'ID',  sort: true}
             ,{field: 'title', title: '标题'}
             ,{field: 'author', title: '作者'}
-            ,{field: 'isStick', title: '置顶'}
-            ,{field: 'allowComment', title: '禁止评论'}
+            ,{field: 'isStick', title: '是否置顶',templet: '#isStickTpl',unresize: true}
+            ,{field: 'allowComment', title: '能否评论',templet: '#allowCommentTpl',unresize: true}
             ,{field: 'gmtCreate', title: '创建时间', sort: true}
             ,{field: 'gmtModified', title: '修改时间', sort: true}
         ]]
@@ -99,5 +100,62 @@ layui.use(['table','layer'], function(){
         active[type] ? active[type].call(this) : '';
     });
 
+    //监听置顶操作
+    form.on('checkbox(stickDemo)', function(obj){
+        //layer.tips(this.value + ' ' + this.name + '：'+ obj.elem.checked, obj.othis);
+
+        var stick;
+        if(obj.elem.checked){
+            stick = 1;//置顶
+        }else{
+            stick = 0;//取消置顶
+        }
+
+        $.ajax({
+            url: 'admin/updateArticleStick',
+            type: 'POST',
+            traditional:true,
+            data:{
+                "id":this.value,
+                "isStick":stick
+            },
+            success: function (data) {
+                layer.tips(data.errMsg,obj.othis);
+            },
+            error: function () {
+                layer.tips("请求失败！",obj.othis);
+            }
+        });
+
+    });
+
+    //监听允许评论操作
+    form.on('checkbox(commentDemo)', function(obj){
+        //layer.tips(this.value + ' ' + this.name + '：'+ obj.elem.checked, obj.othis);
+
+        var allowComment;
+        if(obj.elem.checked){
+            allowComment = 0;//允许
+        }else{
+            allowComment = 1;//禁止
+        }
+
+        $.ajax({
+            url: 'admin/updateAllowComment',
+            type: 'POST',
+            traditional:true,
+            data:{
+                "id":this.value,
+                "allowComment":allowComment
+            },
+            success: function (data) {
+                layer.tips(data.errMsg,obj.othis);
+            },
+            error: function () {
+                layer.tips("请求失败！",obj.othis);
+            }
+        });
+
+    });
 });
 
