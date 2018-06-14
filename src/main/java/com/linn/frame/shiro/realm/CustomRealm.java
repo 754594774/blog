@@ -25,7 +25,7 @@ import java.util.Set;
 public class CustomRealm extends AuthorizingRealm {
 
     @Resource
-    private UserService userService;;
+    private UserDao userDao;;
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
@@ -40,13 +40,13 @@ public class CustomRealm extends AuthorizingRealm {
     }
 
     private Set<String> getPermisionByUsername(String username) {
-        List<String> list = userService.getPermisionByUsername(username);
+        List<String> list = userDao.getPermisionByUsername(username);
         Set<String> roles = new HashSet<String>(list);
         return roles;
     }
 
     private Set<String> getRolesByUsername(String username) {
-        List<String> list = userService.getRolesByUsername(username);
+        List<String> list = userDao.getRolesByUsername(username);
         Set<String> roles = new HashSet<String>(list);
         return roles;
     }
@@ -69,7 +69,7 @@ public class CustomRealm extends AuthorizingRealm {
     }
 
     private String getPasswordByUsername(String username) {
-        User user = userService.getPasswordByUsername(username);
+        User user = userDao.getPasswordByUsername(username);
         if(user != null){
             return user.getPassWord();
         }

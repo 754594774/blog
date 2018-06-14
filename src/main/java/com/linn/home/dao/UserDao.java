@@ -13,27 +13,6 @@ import java.util.List;
 public interface UserDao {
 
     /**
-     * 查找所用用户
-     * @param
-     * @return
-     */
-    List<User> findUserList();
-    /**
-     * 根据用户名和密码查找用户
-     * @param user
-     * @return
-     */
-    User findUserByNameAndPwd(User user);
-
-    /**
-     * 添加用户
-     * @param user
-     * @return
-     * @throws Exception
-     */
-    int addUser(User user);
-
-    /**
      * 更新用户密码
      * @param user
      * @return
@@ -42,19 +21,25 @@ public interface UserDao {
     int updateUserByUserName(User user);
 
     /**
-     * 删除用户
-     * @param id
-     * @return
-     * @throws Exception
-     */
-    int deleteUserById(int id);
-
-    /**
-     * 根据用户名查找用户
+     * 修改用户密码
      * @param user
      * @return
      */
-    User findUserByName(User user);
+    int updatePasswordByUsername(User user);
+
+    /**
+     * 验证密码是否正确
+     * @param user
+     * @return
+     */
+    int findUserByNameAndPass(User user);
+
+    /**
+     * 通过用户名查找用户信息
+     * @param username
+     * @return
+     */
+    User findUserByName(String username);
 
     /**
      * 根据用户名查找用户的角色
@@ -78,9 +63,8 @@ public interface UserDao {
     List<String> getPermisionByUsername(String username);
 
     /**
-     * 根据id查找用户
-     * @param userId
-     * @return
+     * 更新头像地址
+     * @param user
      */
-    User findUserById(Integer userId);
+    void updateUserAvatar(User user);
 }

@@ -1,6 +1,7 @@
 package com.linn.home.controller;
 
 import com.linn.frame.controller.BaseController;
+import com.linn.home.entity.User;
 import com.linn.home.service.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -104,7 +105,10 @@ public class LoginController extends BaseController{
         if(subject == null){
             return  "admin/login";
         }
-        model.addAttribute("username",subject.getPrincipal().toString());
+        User user = new User();
+        user.setUserName(subject.getPrincipal().toString());
+        user = userService.findUserByName(user.getUserName());
+        model.addAttribute(user);
         return "admin/index";
     }
 

@@ -10,7 +10,6 @@ layui.use(['form', 'layer'], function(){
             layer.alert("文章内容不能为空", {icon: 2});
             return false;
         }
-        var localUser = layui.sessionData('user');
         var isStick = 0,allowComment = 0;
         if(data.field.isStick == "on"){
             isStick = 1;
@@ -24,7 +23,6 @@ layui.use(['form', 'layer'], function(){
                 id: data.field.articleId,
                 categoryId:data.field.categoryId,
                 title:data.field.title,
-                author:localUser.username,//作者即登陆用户名
                 allowComment:allowComment,
                 isStick:isStick,
                 content:editor.getData()

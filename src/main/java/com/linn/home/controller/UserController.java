@@ -8,16 +8,20 @@ import com.linn.frame.util.SysContent;
 import com.linn.home.entity.Link;
 import com.linn.home.entity.User;
 import com.linn.home.service.UserService;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.crypto.hash.Md5Hash;
+import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -27,124 +31,128 @@ import java.util.Map;
  * Created by Administrator on 2018-03-08.
  */
 @Controller
-public class UserController extends BaseController{
+public class UserController extends BaseController {
 
     @Resource
     private UserService userService;
 
-    @ResponseBody
-    @RequestMapping("admin/getUserListData")
-    public ResultTable getUserListData(@RequestParam(value = "page") Integer page,
-                                       @RequestParam(value = "limit") Integer limit) {
-
-        PageInfo pageInfo = new PageInfo();
-        pageInfo.setPageNum(page);
-        pageInfo.setPageSize(limit);
-        pageInfo =  userService.findUserList(pageInfo);
-        return new ResultTable(String.valueOf(SysContent.SUCCESS), "", pageInfo.getTotal(), pageInfo.getList());
-    }
-
     /**
-     * 根据id查找用户
-     * @param userId
+     * 跳转到用户资料修改页面
+     *
      * @param model
      * @return
      */
-    public String toUserForm(@RequestParam(value = "userId", required = false) Integer userId
-                        , Model model){
-        if (!StringUtils.isEmpty(userId)) {
-            User user = userService.findUserById(userId);
+    @RequestMapping(value = "admin/toUserSet", method = RequestMethod.GET)
+    public String toUserSet(Model model) {
+        Subject subject = SecurityUtils.getSubject();
+        if (subject != null) {
+            String username = subject.getPrincipal().toString();
+            User user = userService.findUserByName(username);
+
             model.addAttribute("user", user);
         }
-        return "admin/userForm";
-
+        return "admin/userSet";
     }
 
     /**
-     * 添加或修改用户
-     * @param user
+     * 修改用户个人信息
+     *
      * @return
-     * @throws Exception
      */
     @ResponseBody
-    @RequestMapping("admin/addOrUpdateUser")
-    public ResultBean addOrUpdateUser(User user) {
-        Md5Hash hash = new Md5Hash(user.getPassWord(),user.getUserName());
-        user.setPassWord(hash.toString());
-        if(StringUtils.isEmpty(user.getId())) {
-            if(userService.findUserByName(user)!=null) {
-                return new ResultBean(SysContent.ERROR,"用户名不能重复！");
-            }
-            //添加
-            user.setGmtCreate(new Date());
-            user.setGmtModified(new Date());
-            int ret = userService.addUser(user);
-        }else {
-            //更新
-            user.setGmtModified(new Date());
-            int ret = userService.updateUserByUserName(user);
+    @RequestMapping("admin/updateUserInfo")
+    private ResultBean updateUserInfo(User user) {
+        Subject subject = SecurityUtils.getSubject();
+        if (!subject.isAuthenticated()) {
+            return new ResultBean(SysContent.ERROR, "请先登录");
         }
-        return new ResultBean(SysContent.SUCCESS,"操作成功");
-    }
+        String username = subject.getPrincipal().toString();
+        user.setUserName(username);
+        if (StringUtils.isEmpty(user.getNickname())) {
+            return new ResultBean(SysContent.ERROR, "昵称不能为空");
+        }
+        if (!StringUtils.isEmpty(user.getSignMsg()) && user.getSignMsg().length() > 30) {
+            return new ResultBean(SysContent.ERROR, "签名过长，最多30个字符");
+        }
 
-    /**
-     * 删除用户
-     * @param ids
-     * @return
-     * @throws Exception
-     */
-    @ResponseBody
-    @RequestMapping("admin/delUser")
-    public ResultBean delUser(int[] ids) {
-        if(ids!=null && ids.length > 0){
-            for (int id: ids) {
-                int ret = userService.deleteUserById(id);
-            }
-        }
-        return new ResultBean(SysContent.SUCCESS,"删除成功");
+        userService.updateUserByUserName(user);
+        return new ResultBean(SysContent.SUCCESS, "操作成功");
     }
 
     /**
      * 修改密码
-     * @param map
+     *
      * @return
-     * @throws Exception
      */
     @ResponseBody
-    @RequestMapping("admin/changePwd")
-    public ResultBean changePwd(@RequestBody Map<String, String> map) {
+    @RequestMapping("admin/updateUserPass")
+    public ResultBean updateUserPass(@RequestParam(value = "nowpass") String nowpass
+            , @RequestParam(value = "pass") String pass
+            ,@RequestParam(value = "repass") String repass) {
+        Subject subject = SecurityUtils.getSubject();
+        if (!subject.isAuthenticated()) {
+            return new ResultBean(SysContent.ERROR, "请先登录");
+        }
 
         User user = new User();
-        //用户名
-        if(map.containsKey("userName") && !StringUtils.isEmpty(map.get("userName"))){
-            String userName = map.get("userName").trim();
-            user.setUserName(userName);
+        user.setUserName(subject.getPrincipal().toString());
+        Md5Hash hashNowPass = new Md5Hash(nowpass, user.getUserName());
+        user.setPassWord(hashNowPass.toString());
+        int count = userService.findUserByNameAndPass(user);
+        if(count <= 0){
+            return new ResultBean(SysContent.ERROR, "原密码不正确");
         }
-        //老密码
-        if(map.containsKey("passWord") && !StringUtils.isEmpty(map.get("passWord"))){
-            String passWord = map.get("passWord").trim();
-            Md5Hash hash = new Md5Hash(passWord,user.getUserName());
-            user.setPassWord(hash.toString());
+        if(!pass.equals(repass)){
+            return new ResultBean(SysContent.ERROR, "两次密码不一致");
+        }
+        if(pass.length() < 6){
+            return new ResultBean(SysContent.ERROR, "密码长度为6到16个字符");
+        }
+        Md5Hash hashPass = new Md5Hash(pass, user.getUserName());
+        user.setPassWord(hashPass.toString());
+
+        int ret = userService.updatePasswordByUsername(user);
+        return new ResultBean(SysContent.SUCCESS, "操作成功");
+    }
+
+    /**
+     * 上传头像图片
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("admin/uploadAvatar")
+    public ResultBean uploadAvatar(@RequestParam(value = "file") CommonsMultipartFile file,
+                                   HttpServletRequest request){
+
+        String path = request.getSession().getServletContext().getRealPath("upload/avatar");
+        Subject subject = SecurityUtils.getSubject();
+        String fileName = file.getOriginalFilename();
+
+        User user = new User();
+        user.setUserName(subject.getPrincipal().toString());
+
+//        修改保存的蹄片名称格式 username_avatar
+        if(fileName.indexOf(".")>=0){
+            String suffix =  fileName.substring(fileName.indexOf("."));
+            fileName = subject.getPrincipal().toString() + "_avatar" + suffix;
         }
 
-        user = userService.findUserByNameAndPwd(user);
-        if(user == null){
-            return new ResultBean(SysContent.ERROR,"密码错误!");
+            File targetFile = new File(path, fileName);
+        if (!targetFile.exists()) {
+            targetFile.mkdirs();
         }
-
-        //新密码
-        if(map.containsKey("newPwd") && !StringUtils.isEmpty(map.get("newPwd"))){
-            if(StringUtils.isEmpty(map.get("newPwd"))){
-                return new ResultBean(SysContent.ERROR,"新密码不能为空!");
-            }
-            String newPwd = map.get("newPwd").trim();
-            Md5Hash hash = new Md5Hash(newPwd,user.getUserName());
-            user.setPassWord(hash.toString());
+        String fileLocation  = "";
+        //保存
+        try {
+            file.transferTo(targetFile);
+            fileLocation = request.getContextPath() + "/upload/avatar/" + fileName;
+            user.setAvatar(fileLocation);
+            userService.updateUserAvatar(user);
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            return  new ResultBean(SysContent.ERROR, "保存失败");
         }
-        //更新
-        user.setGmtModified(new Date());
-        int ret = userService.updateUserByUserName(user);
-        return new ResultBean(SysContent.SUCCESS,"修改成功");
+        return  new ResultBean(SysContent.SUCCESS, "保存成功",fileLocation);
     }
 
 }

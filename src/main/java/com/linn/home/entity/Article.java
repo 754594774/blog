@@ -15,6 +15,7 @@ public class Article implements Serializable{
 	private Integer categoryId;
 	private String title;
 	private String author;
+	private User user;
 	private String intro;
 	private String content;
 	private Date gmtCreate;
@@ -141,6 +142,14 @@ public class Article implements Serializable{
 		this.commentCount = commentCount;
 	}
 
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 	@Override
 	public String toString() {
 		return "Article{" +
@@ -158,6 +167,7 @@ public class Article implements Serializable{
 				", isDraft=" + isDraft +
 				", isDeleted=" + isDeleted +
 				", commentCount=" + commentCount +
+				", user=" + user +
 				'}';
 	}
 }

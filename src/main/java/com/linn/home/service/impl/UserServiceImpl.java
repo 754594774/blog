@@ -2,12 +2,15 @@ package com.linn.home.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.linn.frame.util.SysContent;
 import com.linn.home.dao.UserDao;
 import com.linn.home.entity.User;
 import com.linn.home.service.UserService;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -20,55 +23,35 @@ public class UserServiceImpl implements UserService {
     private UserDao userDao;
 
     @Override
-    public User findUserByName(User user) {
-        return userDao.findUserByName(user);
-    }
+    public User findUserByName(String username) {
 
-    @Override
-    public User findUserByNameAndPwd(User user) {
-        return userDao.findUserByNameAndPwd(user);
-    }
-
-    @Override
-    public PageInfo findUserList(PageInfo pageInfo) {
-        PageHelper.startPage(pageInfo.getPageNum(), pageInfo.getPageSize());
-        List<User> users =  userDao.findUserList();
-        pageInfo = new PageInfo(users);
-        return pageInfo;
-    }
-
-    @Override
-    public int addUser(User user) {
-        return userDao.addUser(user);
+        User user = userDao.findUserByName(username);
+        //设置默认头像
+        if(StringUtils.isEmpty(user.getAvatar())){
+            user.setAvatar(SysContent.DEFAULT_AVATAR);
+        }
+        return user;
     }
 
     @Override
     public int updateUserByUserName(User user) {
+        user.setGmtModified(new Date());
         return userDao.updateUserByUserName(user);
     }
 
     @Override
-    public int deleteUserById(int id) {
-        return userDao.deleteUserById(id);
+    public int updatePasswordByUsername(User user) {
+        return userDao.updatePasswordByUsername(user);
+
     }
 
     @Override
-    public List<String> getRolesByUsername(String username) {
-        return userDao.getRolesByUsername(username);
+    public int findUserByNameAndPass(User user) {
+        return userDao.findUserByNameAndPass(user);
     }
 
     @Override
-    public User getPasswordByUsername(String username) {
-        return userDao.getPasswordByUsername(username);
-    }
-
-    @Override
-    public List<String> getPermisionByUsername(String username) {
-        return userDao.getPermisionByUsername(username);
-    }
-
-    @Override
-    public User findUserById(Integer userId) {
-        return userDao.findUserById(userId);
+    public void updateUserAvatar(User user) {
+        userDao.updateUserAvatar(user);
     }
 }

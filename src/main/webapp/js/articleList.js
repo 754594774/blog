@@ -19,33 +19,35 @@ layui.use('flow', function(){
             $.get(url, function(res){
                 //假设你的列表返回在data集合中
                 layui.each(res.list, function(index, item){
-                    var url = "javascript:jump(\"toArticleDetail?articleId=" + item.id + "\",1);";
-                    lis.push(
-                        "<li>" +
-                        "<a href=" + url + " class=\"fly-avatar\">" +
-                        "<img src=\"https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg\"" +
-                        "alt=\"贤心\">" +
-                        "</a>" +
-                        "<h2>" +
-                        "<a class=\"layui-badge\">后端</a>" +
-                        "<a href=" + url + ">" + item.title + "</a>" +
-                        "</h2>" +
-                        "<div class=\"fly-list-info\">" +
-                        "<cite>" + item.author + "</cite>" +
-                        "<span>" + item.gmtCreate + "</span>" +
-                        "<span class=\"fly-list-kiss\" title=\"热度\"><i " +
-                        "class=\"iconfont icon-kiss\"></i> 60</span>" +
-                        "<span class=\"fly-list-nums\">" +
-                        "<i class=\"iconfont icon-pinglun1\" title=\"留言\"></i> " +
-                        item.commentCount +
-                        "</span>" +
-                        "</div>" +
-                        "<div class=\"fly-list-badge\">" +
-                        stickFormatter(item.isStick) +
-                        splendidFormatter(item.commentCount) +
-                        "</div>" +
-                        "</li>"
-                    );
+                    if(item.user != null){
+                        var url = "javascript:jump(\"toArticleDetail?articleId=" + item.id + "\",1);";
+                        lis.push(
+                            "<li>" +
+                            "<a href=" + url + " class=\"fly-avatar\">" +
+                            "<img src=\"" + item.user.avatar + "\"" +
+                            "alt=\"贤心\">" +
+                            "</a>" +
+                            "<h2>" +
+                            "<a class=\"layui-badge\">后端</a>" +
+                            "<a href=" + url + ">" + item.title + "</a>" +
+                            "</h2>" +
+                            "<div class=\"fly-list-info\">" +
+                            "<cite>" + item.user.nickname + "</cite>" +
+                            "<span>" + item.gmtCreate + "</span>" +
+                            "<span class=\"fly-list-kiss\" title=\"热度\"><i " +
+                            "class=\"iconfont icon-kiss\"></i> 60</span>" +
+                            "<span class=\"fly-list-nums\">" +
+                            "<i class=\"iconfont icon-pinglun1\" title=\"留言\"></i> " +
+                            item.commentCount +
+                            "</span>" +
+                            "</div>" +
+                            "<div class=\"fly-list-badge\">" +
+                            stickFormatter(item.isStick) +
+                            splendidFormatter(item.commentCount) +
+                            "</div>" +
+                            "</li>"
+                        );
+                    }
                 });
 
                 //执行下一页渲染，第二参数为：满足“加载更多”的条件，即后面仍有分页

@@ -31,6 +31,7 @@ layui.use(['table','layer'], function(){
                 type: 2,
                 title: '发表新帖',
                 shadeClose: false,
+                offset: '50px',
                 shade: 0.8,
                 area: ['95%', '90%'],
                 content: ['admin/toArticleForm','no'],

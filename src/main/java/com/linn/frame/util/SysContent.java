@@ -48,4 +48,10 @@ public class SysContent {
      * 默认10条
      */
     public static final Integer DEFAULT_PAGE_NUM = 10;
+
+    /**
+     * 默认头像
+     * https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg
+     */
+    public static final String DEFAULT_AVATAR = "http://t.cn/RCzsdCq";
 }

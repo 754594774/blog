@@ -26,8 +26,9 @@
                 <i class="layui-icon" title="刷新">&#xe666;</i>
             </button>
         </div>
-        <table id="linkList" lay-filter=""></table>
+        <table id="linkList" lay-filter="*"></table>
     </div>
 </div>
+
 </body>
 </html>

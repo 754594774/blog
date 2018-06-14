@@ -27,6 +27,7 @@ layui.use(['table','layer'], function(){
                 title: '添加分类',
                 shadeClose: false,
                 shade: 0.8,
+                offset: '50px',
                 area: ['500', '300'],
                 content: ['admin/toCategoryForm','no'],
                 scrollbar: false

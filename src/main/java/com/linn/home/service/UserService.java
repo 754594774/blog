@@ -11,23 +11,13 @@ import java.util.List;
  */
 public interface UserService {
 
-    User findUserByName(User user);
-
-    User findUserByNameAndPwd(User user);
-
-    PageInfo findUserList(PageInfo pageInfo);
-
-    int addUser(User user);
+    User findUserByName(String username);
 
     int updateUserByUserName(User user);
 
-    int deleteUserById(int id);
+    int updatePasswordByUsername(User user);
 
-    List<String> getRolesByUsername(String username);
+    int findUserByNameAndPass(User user);
 
-    User getPasswordByUsername(String username);
-
-    List<String> getPermisionByUsername(String username);
-
-    User findUserById(Integer userId);
+    void updateUserAvatar(User user);
 }

@@ -9,8 +9,14 @@ import java.util.Date;
 public class User {
 
     private Integer id;
+    private String nickname;
     private String userName;
     private String passWord;
+    private Integer sex;
+    private String city;
+    private String signMsg;
+    private String email;
+    private String avatar;
     private Date gmtCreate;
     private Date gmtModified;
 
@@ -54,12 +60,66 @@ public class User {
         this.gmtModified = gmtModified;
     }
 
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public Integer getSex() {
+        return sex;
+    }
+
+    public void setSex(Integer sex) {
+        this.sex = sex;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getSignMsg() {
+        return signMsg;
+    }
+
+    public void setSignMsg(String signMsg) {
+        this.signMsg = signMsg;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
+                ", nickname='" + nickname + '\'' +
                 ", userName='" + userName + '\'' +
                 ", passWord='" + passWord + '\'' +
+                ", sex='" + sex + '\'' +
+                ", city='" + city + '\'' +
+                ", signMsg='" + signMsg + '\'' +
+                ", email='" + email + '\'' +
+                ", avatar='" + avatar + '\'' +
                 ", gmtCreate=" + gmtCreate +
                 ", gmtModified=" + gmtModified +
                 '}';

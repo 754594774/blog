@@ -6,7 +6,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>blog</title>
+    <title>Fly-blog</title>
     <%@include file="./common/include.jsp" %>
     <link rel="stylesheet" type="text/css" href="${rc.contextPath}/css/global.css" />
     <link rel="stylesheet" type="text/css" href="${rc.contextPath}/css/index.css" />

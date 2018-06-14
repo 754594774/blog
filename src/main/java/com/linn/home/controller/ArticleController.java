@@ -8,10 +8,9 @@ import com.linn.frame.entity.ResultTable;
 import com.linn.frame.util.DateUtils;
 import com.linn.frame.util.SysContent;
 import com.linn.home.entity.*;
-import com.linn.home.service.ArticleService;
-import com.linn.home.service.CategoryService;
-import com.linn.home.service.LinkService;
-import com.linn.home.service.NoticeService;
+import com.linn.home.service.*;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -51,6 +50,9 @@ public class ArticleController extends BaseController {
 
     @Resource
     private LinkService linkService;
+
+    @Resource
+    private UserService userService ;
 
     /**
      * 前端主页面
@@ -188,7 +190,8 @@ public class ArticleController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "/admin/publishArticle", method = RequestMethod.POST)
     public ResultBean publishArticle(Article article) {
-
+        Subject subject = SecurityUtils.getSubject();
+        article.setAuthor(subject.getPrincipal().toString());
         if (StringUtils.isEmpty(article.getId())) {
             //添加
             article.setGmtCreate(new Date());
