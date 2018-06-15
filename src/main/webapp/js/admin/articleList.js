@@ -49,6 +49,7 @@ layui.use(['table','layer','form'], function(){
             layer.open({
                 type: 2,
                 title: '发表新帖',
+                offset: '50px',
                 shade: 0.8,
                 shadeClose: false,
                 area: ['95%', '90%'],

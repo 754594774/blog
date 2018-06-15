@@ -24,21 +24,23 @@ public class EncodingFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         servletRequest.setCharacterEncoding(encoding);
+        servletResponse.setCharacterEncoding(encoding);
         filterChain.doFilter(new HttpServletRequestWrapper((HttpServletRequest) servletRequest) {
             @Override
             public String getParameter(String name) {
                 String value = super.getParameter(name);
-                if (super.getMethod().equalsIgnoreCase("GET")) {
+                if (this.getMethod().equalsIgnoreCase("GET")) {
 
                     if (value != null) {
                         try {
-                            value = new String(value.getBytes("iso8859-1"), encoding);
+                            return new String(value.getBytes("iso8859-1"), encoding);
                         } catch (UnsupportedEncodingException e) {
                             logger.error(e.getMessage(),e);
                         }
+                        return value;
                     }
                 }
-                return value;
+                return super.getParameter(name);
             }
         },servletResponse);
     }

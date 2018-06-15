@@ -84,22 +84,18 @@ public class ArticleController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/toArticleList", method = RequestMethod.GET)
-    public String toArticleList(String test, Model model,
-                                @RequestParam(value = "categoryId", required = false) Integer categoryId,
-                                @RequestParam(value = "categoryTitle", required = false) String categoryTitle,
-                                @RequestParam(value = "date", required = false) String date,
-                                @RequestParam(value = "searchContent", required = false) String searchContent) {
-        try {
-            if (!StringUtils.isEmpty(categoryTitle)) {
-                String strTitle = new String(categoryTitle.getBytes("ISO-8859-1"), "UTF-8");
-                model.addAttribute("title", strTitle);
-            }
-            if (!StringUtils.isEmpty(searchContent)) {
-                String strSearch = new String(searchContent.getBytes("ISO-8859-1"), "UTF-8");
-                model.addAttribute("searchContent", strSearch);
-            }
-        } catch (UnsupportedEncodingException e) {
-            logger.error(e.getMessage(), e);
+    public String toArticleList(HttpServletRequest servletRequest,Model model) {
+
+        String categoryId =  servletRequest.getParameter("categoryId");
+        String categoryTitle =  servletRequest.getParameter("categoryTitle");
+        String searchContent =  servletRequest.getParameter("searchContent");
+        String date =  servletRequest.getParameter("date");
+
+        if (!StringUtils.isEmpty(categoryTitle)) {
+            model.addAttribute("title", categoryTitle);
+        }
+        if (!StringUtils.isEmpty(searchContent)) {
+            model.addAttribute("searchContent", searchContent);
         }
         model.addAttribute("categoryId", categoryId);
         model.addAttribute("date", date);

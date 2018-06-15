@@ -44,6 +44,7 @@ layui.use(['table','layer'], function(){
                 type: 2,
                 title: '发表新帖',
                 shade: 0.8,
+                offset: '50px',
                 shadeClose: false,
                 area: ['500', '300'],
                 content: ['admin/toCategoryForm?categoryId=' + data[0].id,'no'],
