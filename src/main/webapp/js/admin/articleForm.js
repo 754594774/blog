@@ -22,6 +22,7 @@ layui.use(['form', 'layer'], function(){
             data: {
                 id: data.field.articleId,
                 categoryId:data.field.categoryId,
+                label:data.field.label,
                 title:data.field.title,
                 allowComment:allowComment,
                 isStick:isStick,

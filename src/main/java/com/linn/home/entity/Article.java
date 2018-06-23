@@ -16,7 +16,7 @@ public class Article implements Serializable{
 	private String title;
 	private String author;
 	private User user;
-	private String intro;
+	private String label;
 	private String content;
 	private Date gmtCreate;
 	private Date gmtModified;
@@ -118,14 +118,6 @@ public class Article implements Serializable{
 		this.isDeleted = isDeleted;
 	}
 
-	public String getIntro() {
-		return intro;
-	}
-
-	public void setIntro(String intro) {
-		this.intro = intro;
-	}
-
 	public Integer getAllowComment() {
 		return allowComment;
 	}
@@ -150,6 +142,14 @@ public class Article implements Serializable{
 		this.user = user;
 	}
 
+	public String getLabel() {
+		return label;
+	}
+
+	public void setLabel(String label) {
+		this.label = label;
+	}
+
 	@Override
 	public String toString() {
 		return "Article{" +
@@ -157,7 +157,7 @@ public class Article implements Serializable{
 				", categoryId=" + categoryId +
 				", title='" + title + '\'' +
 				", author='" + author + '\'' +
-				", intro='" + intro + '\'' +
+				", label='" + label + '\'' +
 				", content='" + content + '\'' +
 				", gmtCreate=" + gmtCreate +
 				", gmtModified=" + gmtModified +

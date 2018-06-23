@@ -9,7 +9,7 @@
         <result property="categoryId" column="category_id"/>
         <result property="title" column="title"/>
         <result property="author" column="author"/>
-        <result property="intro" column="intro"/>
+        <result property="label" column="label"/>
         <result property="content" column="content"/>
         <result property="gmtCreate" column="gmt_create"/>
         <result property="gmtModified" column="gmt_modified"/>
@@ -32,12 +32,12 @@
 
     <!--后台文章管理列表-->
     <select id="findArticleListAdmin" parameterType="com.linn.home.entity.Article" resultMap="articleResultMap">
-        SELECT id,title,author,intro,is_stick,allow_comment,is_draft,gmt_create,gmt_modified FROM blog_article ORDER BY id DESC
+        SELECT id,title,author,label,is_stick,allow_comment,is_draft,gmt_create,gmt_modified FROM blog_article ORDER BY id DESC
     </select>
 
     <!--首页文章列表-->
     <select id="selectArticleList" parameterType="com.linn.frame.entity.ParamDto"  resultMap="articleUserMap">
-        SELECT a.id,a.is_stick,a.author,a.title,a.gmt_create,a.intro,
+        SELECT a.id,a.is_stick,a.author,a.title,a.gmt_create,a.label,
         (SELECT count(1)
              FROM blog_comment c
              WHERE a.id = c.article_id)
@@ -63,7 +63,7 @@
 
     <!--根据id查找文章详情-->
     <select id="selectArticleById"  parameterType="int" resultMap="articleResultMap">
-        SELECT a.id,a.title,a.gmt_create,a.gmt_modified,a.author,a.content,a.allow_comment,a.is_stick,a.category_id,
+        SELECT a.id,a.title,a.label,a.gmt_create,a.gmt_modified,a.author,a.content,a.allow_comment,a.is_stick,a.category_id,
          (SELECT count(1)
              FROM blog_comment c
              WHERE a.id = c.article_id)
@@ -78,14 +78,14 @@
 
     <!--添加文章-->
     <insert id="addArticle" parameterType="com.linn.home.entity.Article"  keyProperty="id">
-        INSERT INTO blog_article (category_id, title,intro, author,allow_comment,is_stick, is_draft,content)
-        VALUES (#{categoryId}, #{title},#{intro}, #{author}, #{allowComment},#{isStick}, #{isDraft},#{content})
+        INSERT INTO blog_article (category_id, title,label, author,allow_comment,is_stick, is_draft,content)
+        VALUES (#{categoryId}, #{title},#{label}, #{author}, #{allowComment},#{isStick}, #{isDraft},#{content})
     </insert>
 
     <!--更新文章-->
     <insert id="updateArticle" parameterType="com.linn.home.entity.Article" keyProperty="id">
         UPDATE blog_article
-        SET category_id  = #{categoryId}, title = #{title},intro = #{intro},author = #{author},is_stick = #{isStick},
+        SET category_id  = #{categoryId}, title = #{title},label = #{label},author = #{author},is_stick = #{isStick},
         is_draft=#{isDraft},allow_comment=#{allowComment},content=#{content}
         WHERE id = #{id}
     </insert>

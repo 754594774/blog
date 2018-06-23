@@ -11,7 +11,6 @@
     <script type="text/javascript" src="${rc.contextPath}/plugins/highlight/highlight.pack.js"></script>
 </head>
 <body>
-<input type="hidden" id="articleId" value="${article.id}"/>
     <div class="layui-container">
         <div class="fly-panel detail-box">
             <h1>${article.title}</h1>
@@ -40,24 +39,25 @@
                 <legend>评论</legend>
             </fieldset>
             <form class="layui-form layui-form-pane" action="">
+                <input type="hidden" id="articleId" name="articleId" value="${article.id}" />
                 <div class="layui-form-item">
                     <div class="layui-inline">
                         <label class="layui-form-label">你的名字</label>
                         <div class="layui-input-inline">
-                            <input type="tel" name="name" id="name" lay-verify="required" placeholder="输入名字" autocomplete="off" class="layui-input">
+                            <input type="tel" name="name" id="name" lay-verify="required|maxLength" placeholder="输入名字" autocomplete="off" class="layui-input">
                         </div>
                     </div>
                     <div class="layui-inline">
                         <label class="layui-form-label">联系方式</label>
                         <div class="layui-input-inline">
-                            <input type="text" name="contactInfo" id="contactInfo" lay-verify="required" placeholder="输入联系方式" autocomplete="off" class="layui-input">
+                            <input type="text" name="contactInfo" id="contactInfo" lay-verify="required|maxLength" placeholder="输入联系方式" autocomplete="off" class="layui-input">
                         </div>
                     </div>
                 </div>
                 <div class="layui-form-item layui-form-text">
                     <label class="layui-form-label">内容</label>
                     <div class="layui-input-block">
-                        <textarea id="msg" placeholder=" 请输入留言..." name="msg" lay-verify="required" class="layui-textarea"></textarea>
+                        <textarea id="msg" placeholder=" 请输入留言..." name="msg" lay-verify="required|msg" class="layui-textarea"></textarea>
                     </div>
                 </div>
                 <div class="layui-form-item">

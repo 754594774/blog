@@ -30,12 +30,21 @@
                                         <select lay-verify="required" name="categoryId" lay-filter="column">
                                             <option value="">请选择一个分类</option>
                                             <c:forEach items="${categorys}" var="item">
-                                                <option value="${item.id}" <c:if test="${article.categoryId == item.id}">selected</c:if> >${item.title }</option>                                         </option>
+                                                <option value="${item.id}"
+                                                        <c:if test="${article.categoryId == item.id}">selected</c:if> >${item.title }</option>
+                                                </option>
                                             </c:forEach>
                                         </select>
                                     </div>
                                 </div>
-                                <div class="layui-col-md9">
+                                <div class="layui-col-md3">
+                                    <label for="title" class="layui-form-label">标签</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" id="label" name="label" required lay-verify="required"
+                                               class="layui-input" value="${article.label}">
+                                    </div>
+                                </div>
+                                <div class="layui-col-md6">
                                     <label for="title" class="layui-form-label">标题</label>
                                     <div class="layui-input-block">
                                         <input type="text" id="title" name="title" required lay-verify="required"
@@ -45,11 +54,13 @@
                             </div>
                             <div class="layui-form-item layui-form-text">
                                 <div class="layui-input-block">
-                                    <textarea id="content" name="content" placeholder="详细描述">${article.content}</textarea>
+                                    <textarea id="content" name="content"
+                                              placeholder="详细描述">${article.content}</textarea>
                                 </div>
                             </div>
                             <div class="layui-form-item">
-                                <input type="checkbox" name="isStick" title="置顶" <c:if test="${article.isStick == '1'}">checked</c:if>>
+                                <input type="checkbox" name="isStick" title="置顶"
+                                       <c:if test="${article.isStick == '1'}">checked</c:if>>
                                 <input type="checkbox" name="allowComment" title="禁言"
                                        <c:if test="${article.allowComment == '1'}">checked</c:if>>
                             </div>

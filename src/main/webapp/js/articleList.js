@@ -28,7 +28,7 @@ layui.use('flow', function(){
                             "alt=\"贤心\">" +
                             "</a>" +
                             "<h2>" +
-                            "<a class=\"layui-badge\">后端</a>" +
+                            "<a class=\"layui-badge\">" + item.label + "</a>" +
                             "<a href=" + url + ">" + item.title + "</a>" +
                             "</h2>" +
                             "<div class=\"fly-list-info\">" +

@@ -32,10 +32,10 @@ layui.use(['table','layer','form'], function(){
                 type: 2,
                 title: '发表新帖',
                 shadeClose: false,
-                offset: '50px',
+                offset: '30px',
                 shade: 0.8,
                 area: ['95%', '90%'],
-                content: ['admin/toArticleForm','no'],
+                content: ['admin/toArticleForm'],
                 scrollbar: false
             });
         }
@@ -53,7 +53,7 @@ layui.use(['table','layer','form'], function(){
                 shade: 0.8,
                 shadeClose: false,
                 area: ['95%', '90%'],
-                content: ['admin/toArticleForm?articleId=' + data[0].id,'no'],
+                content: ['admin/toArticleForm?articleId=' + data[0].id],
                 scrollbar: false
             });
         }

@@ -7,6 +7,9 @@ CKEDITOR.editorConfig = function( config ) {
 	// Define changes to default configuration here. For example:
 	// config.language = 'fr';
 	// config.uiColor = '#AADC6E';
+	// Adding drag and drop image upload.
+	config.extraPlugins= 'print,format,font,colorbutton,justify,image2,uploadimage,codesnippet',
+
 	config.toolbar = [
 		{ name: 'tools', items: [ 'Maximize' ] },
 		{ name: 'document', items: [ 'Source' ] },
@@ -18,20 +21,23 @@ CKEDITOR.editorConfig = function( config ) {
 		{ name: 'insert', items: [ 'Image', 'HorizontalRule', 'Smiley',  'CodeSnippet'  ] }
 	];
 
-		config.extraAllowedContent='h3{clear};h2{line-height};h2 h3{margin-left,margin-top}',
+	config.extraAllowedContent='h3{clear};h2{line-height};h2 h3{margin-left,margin-top}',
 
-		// Adding drag and drop image upload.
-		config.extraPlugins= 'print,format,font,colorbutton,justify,uploadimage,codesnippet',
-		//使用zenburn的代码高亮风格样式 PS:zenburn效果就是黑色背景
-		//如果不设置着默认风格为default
-		config.codeSnippet_theme= 'github',
-		config.uploadUrl= 'upload?command=QuickUpload&type=Files&responseType=json',
+	//使用zenburn的代码高亮风格样式 PS:zenburn效果就是黑色背景
+	//如果不设置着默认风格为default
+	config.codeSnippet_theme= 'github',
+	config.uploadUrl= 'upload?command=QuickUpload&type=Files&responseType=json',
 
-		// Configure your file manager integration. This example uses CKFinder 3 for PHP.
-		config.filebrowserBrowseUrl= 'ckfinder/ckfinder.html',
-		config.filebrowserImageBrowseUrl= 'ckfinder/ckfinder.html?type=Images',
-		config.filebrowserUploadUrl= 'upload?command=QuickUpload&type=Files',
-		config.filebrowserImageUploadUrl= 'uploadImage?command=QuickUpload&type=Images',
+	// Configure your file manager integration. This example uses CKFinder 3 for PHP.
+	config.filebrowserBrowseUrl= 'ckfinder/ckfinder.html',
+	config.filebrowserImageBrowseUrl= 'ckfinder/ckfinder.html?type=Images',
+	config.filebrowserUploadUrl= 'upload?command=QuickUpload&type=Files',
+	config.filebrowserImageUploadUrl= 'uploadImage?command=QuickUpload&type=Images',
 
-		config.removeDialogTabs= 'image:advanced;link:advanced'
+	//将Format下拉列表中列出的块元素列表减少到最常用的。
+	//config.format_tags= 'p;h1;h2;h3;pre'
+
+	config.removeDialogTabs= 'image:advanced;link:advanced',
+
+	config.height= 450
 };

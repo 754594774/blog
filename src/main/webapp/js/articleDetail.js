@@ -1,9 +1,27 @@
 layui.use(['form', 'flow'], function(){
-    setParentIframeHeight();
     var form = layui.form
         ,layer = layui.layer
         ,$ = layui.jquery //不用额外加载jQuery，flow模块本身是有依赖jQuery的，直接用即可。
         ,flow = layui.flow;
+
+    //自定义验证规则
+    form.verify({
+        maxLength: function(value){
+            if(value.length > 20){
+                return '最多20个字符';
+            }
+        }
+
+    });
+    //自定义验证规则
+    form.verify({
+        msg: function(value){
+            if(value.length > 50){
+                return '最多50个字符';
+            }
+        }
+    });
+
     flow.load({
         elem: '#pn' //流加载容器
         //,isAuto: false
@@ -55,8 +73,8 @@ layui.use(['form', 'flow'], function(){
                 //执行下一页渲染，第二参数为：满足“加载更多”的条件，即后面仍有分页
                 //pages为Ajax返回的总页数，只有当前页小于总页数的情况下，才会继续出现加载更多
                 next(lis.join(''), page < res.pages);
-                setParentIframeHeight();
                 initCommentEvent();
+                setParentIframeHeight();
             });
         }
     });
@@ -65,8 +83,8 @@ layui.use(['form', 'flow'], function(){
     form.on('submit(demo1)', function(data){
         var name = data.field.name;
         var msg = data.field.msg;
-        var contactInfo = data.field.contactInfo
-        var articleId = $("#articleId").val();
+        var contactInfo = data.field.contactInfo;
+        var articleId = data.field.articleId;
 
         var innerHtml =
             "<li class=\"list0\"> <a class=\"close\" href=\"javascript:;\">X</a>\n" +
@@ -80,6 +98,7 @@ layui.use(['form', 'flow'], function(){
             "  </div>\n" +
             "</li>";
         $("#pn").prepend(innerHtml);
+        setParentIframeHeight();
         $("#msg").val("");
         //发送ajax请求
         $.ajax({
@@ -103,7 +122,7 @@ layui.use(['form', 'flow'], function(){
                 alert("评论失败!");
             }
         });
-        setParentIframeHeight();
+
         return false;
     });
 });
@@ -244,7 +263,6 @@ function initCommentEvent() {
         textarea.value = "评论…";
         textarea.parentNode.className = "hf";
         $(box).find(".layui-inline").hide();
-        setParentIframeHeight();
     }
 
     //回复里点赞
@@ -293,11 +311,11 @@ function initCommentEvent() {
             textarea.value = "回复 " + user.innerHTML;
             //调用键盘事件
             textarea.onkeyup();
-            setParentIframeHeight();
         } else {
             //否则就是删除节点
             remove(comment);
         }
+        setParentIframeHeight();
     }
     //遍历所有状态消息
     for (var i = 0; i < lists.length-1; i++) {
@@ -340,6 +358,7 @@ function initCommentEvent() {
 
             this.parentNode.className = 'hf hf-on';
             this.value = this.value == '评论…' ? '' : this.value;
+            setParentIframeHeight();
         }
         //失焦事件
         textarea.onblur = function() {

@@ -6,6 +6,7 @@ import com.linn.frame.entity.ResultBean;
 import com.linn.frame.util.SysContent;
 import com.linn.home.entity.Article;
 import com.linn.home.entity.Comment;
+import com.linn.home.entity.Notice;
 import com.linn.home.service.CommentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
@@ -86,6 +87,7 @@ public class CommentController extends BaseController {
     @ResponseBody
     @RequestMapping("/addComment")
     public ResultBean addComment(Comment comment) {
+        comment = jsFilter(comment);
         comment.setIsleaf(SysContent.NO);
         int ret = commentService.addComment(comment);
         if (ret > 0) {
@@ -95,5 +97,29 @@ public class CommentController extends BaseController {
             commentService.updateCommentById(pComm);
         }
         return new ResultBean(SysContent.SUCCESS, "操作成功");
+    }
+
+    private Comment jsFilter(Comment comment){
+        if(!StringUtils.isEmpty(comment.getContent())) {
+            String content = comment.getContent()
+                    .replaceAll("<script>", "(script)")
+                    .replaceAll("</script>","(/script)");
+            comment.setContent(content);
+        }
+        if(!StringUtils.isEmpty(comment.getContactInfo())){
+            String contactInfo = comment.getContactInfo()
+                    .replaceAll("<script>", "(script)")
+                    .replaceAll("</script>","(/script)");
+            comment.setContactInfo(contactInfo);
+        }
+        if(!StringUtils.isEmpty(comment.getMemberName()))
+        {
+            String memberName = comment.getMemberName()
+                    .replaceAll("<script>", "(script)")
+                    .replaceAll("</script>","(/script)");
+            comment.setMemberName(memberName);
+        }
+
+        return comment;
     }
 }

@@ -7,13 +7,11 @@ function jump(url,type) {
             webApp = document.getElementById("webApp");
             frame = document.getElementById(iframeId);
             frame.src = url;
-            //setIframeHeight();
         }
         if(type== 1){//iframe子页面调用
             webApp = parent.document.getElementById("webApp");
             frame = parent.document.getElementById(iframeId);
             frame.src = url;
-            setParentIframeHeight();
         }
 
     }
@@ -21,20 +19,20 @@ function jump(url,type) {
 
 //iframe所在页面调用此方法：
 // 根据iframe子页面高度度控制iframe高度自适应
-function setIframeHeight(){
-    try{
-        var iframe = document.getElementById(iframeId);
-        if(iframe.attachEvent){
-            iframe.height =  iframe.contentWindow.document.documentElement.height - 15;
-            return;
-        }else{
-            iframe.height = iframe.contentDocument.body.height - 15;
-            return;
-        }
-    }catch(e){
-        throw new Error('setIframeHeight Error');
-    }
-}
+//function setIframeHeight(){
+//    try{
+//        var iframe = document.getElementById(iframeId);
+//        if(iframe.attachEvent){
+//            iframe.height =  iframe.contentWindow.document.documentElement.height - 15;
+//            return;
+//        }else{
+//            iframe.height = iframe.contentDocument.body.height - 15;
+//            return;
+//        }
+//    }catch(e){
+//        throw new Error('setIframeHeight Error');
+//    }
+//}
 //iframe子页面调用此方法：根据子页面高度设置iframe高度
 function setParentIframeHeight(){
     try{

@@ -73,6 +73,7 @@ public class NoticeController extends BaseController {
     @ResponseBody
     @RequestMapping("/admin/addOrUpdateNotice")
     public ResultBean addOrUpdateNotice(Notice notice) {
+        notice = jsFilter(notice);
         if(StringUtils.isEmpty(notice.getId())) {
             //添加
             notice.setGmtCreate(new Date());
@@ -112,5 +113,25 @@ public class NoticeController extends BaseController {
 
         noticeService.updateNotcieIsActive(notice);
         return new ResultBean(SysContent.SUCCESS,"修改成功");
+    }
+
+    private Notice jsFilter(Notice notice){
+        if(!StringUtils.isEmpty(notice.getTitle())) {
+            String title = notice.getTitle().replaceAll("<script>", "(script)")
+                    .replaceAll("</script>","(/script)");;
+            notice.setTitle(title);
+
+        }
+        if(!StringUtils.isEmpty(notice.getContent())) {
+            String content = notice.getContent().replaceAll("<script>", "(script)")
+                    .replaceAll("</script>","(/script)");;
+            notice.setContent(content);
+        }
+        if(!StringUtils.isEmpty(notice.getAuthor())) {
+            String author = notice.getAuthor().replaceAll("<script>", "(script)")
+                    .replaceAll("</script>","(/script)");;
+            notice.setAuthor(author);
+        }
+        return notice;
     }
 }
