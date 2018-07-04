@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.linn.frame.controller.BaseController;
 import com.linn.frame.entity.ResultBean;
 import com.linn.frame.entity.ResultTable;
+import com.linn.frame.shiro.realm.ShiroUser;
 import com.linn.frame.util.SysContent;
 import com.linn.home.entity.Link;
 import com.linn.home.entity.User;
@@ -44,14 +45,17 @@ public class UserController extends BaseController {
      */
     @RequestMapping(value = "admin/toUserSet", method = RequestMethod.GET)
     public String toUserSet(Model model) {
-        Subject subject = SecurityUtils.getSubject();
-        if (subject != null) {
-            String username = subject.getPrincipal().toString();
+        ShiroUser shiroUser = ShiroUser.getShiroUser();
+        if (shiroUser != null) {
+            String username = shiroUser.getUserName();
             User user = userService.findUserByName(username);
 
             model.addAttribute("user", user);
+            return "admin/userSet";
+        }else{
+            return "/error";
         }
-        return "admin/userSet";
+
     }
 
     /**
@@ -62,19 +66,13 @@ public class UserController extends BaseController {
     @ResponseBody
     @RequestMapping("admin/updateUserInfo")
     private ResultBean updateUserInfo(User user) {
-        Subject subject = SecurityUtils.getSubject();
-        if (!subject.isAuthenticated()) {
-            return new ResultBean(SysContent.ERROR, "请先登录");
-        }
-        String username = subject.getPrincipal().toString();
-        user.setUserName(username);
         if (StringUtils.isEmpty(user.getNickname())) {
             return new ResultBean(SysContent.ERROR, "昵称不能为空");
         }
         if (!StringUtils.isEmpty(user.getSignMsg()) && user.getSignMsg().length() > 30) {
             return new ResultBean(SysContent.ERROR, "签名过长，最多30个字符");
         }
-
+        user.setUserName(ShiroUser.getShiroUser().getUserName());
         userService.updateUserByUserName(user);
         return new ResultBean(SysContent.SUCCESS, "操作成功");
     }
@@ -89,13 +87,17 @@ public class UserController extends BaseController {
     public ResultBean updateUserPass(@RequestParam(value = "nowpass") String nowpass
             , @RequestParam(value = "pass") String pass
             ,@RequestParam(value = "repass") String repass) {
-        Subject subject = SecurityUtils.getSubject();
-        if (!subject.isAuthenticated()) {
-            return new ResultBean(SysContent.ERROR, "请先登录");
-        }
+//        Subject subject = SecurityUtils.getSubject();
+//        boolean admin = subject.hasRole("admin");
+//        boolean guest = subject.hasRole("guest");
+//        boolean sel = subject.isPermitted("select");
 
+        ShiroUser shiroUser = ShiroUser.getShiroUser();
+        if(shiroUser == null){
+            return new ResultBean(SysContent.ERROR, "未登录");
+        }
         User user = new User();
-        user.setUserName(subject.getPrincipal().toString());
+        user.setUserName(shiroUser.getUserName());
         Md5Hash hashNowPass = new Md5Hash(nowpass, user.getUserName());
         user.setPassWord(hashNowPass.toString());
         int count = userService.findUserByNameAndPass(user);
@@ -105,13 +107,14 @@ public class UserController extends BaseController {
         if(!pass.equals(repass)){
             return new ResultBean(SysContent.ERROR, "两次密码不一致");
         }
-        if(pass.length() < 6){
-            return new ResultBean(SysContent.ERROR, "密码长度为6到16个字符");
+        if(pass.length() < 5){
+            return new ResultBean(SysContent.ERROR, "密码长度为5到16个字符");
         }
         Md5Hash hashPass = new Md5Hash(pass, user.getUserName());
         user.setPassWord(hashPass.toString());
 
         int ret = userService.updatePasswordByUsername(user);
+
         return new ResultBean(SysContent.SUCCESS, "操作成功");
     }
 
@@ -125,16 +128,16 @@ public class UserController extends BaseController {
                                    HttpServletRequest request){
 
         String path = request.getSession().getServletContext().getRealPath("upload/avatar");
-        Subject subject = SecurityUtils.getSubject();
         String fileName = file.getOriginalFilename();
 
         User user = new User();
-        user.setUserName(subject.getPrincipal().toString());
+        ShiroUser shiroUser = ShiroUser.getShiroUser();
+        user.setUserName(shiroUser.getUserName());
 
-//        修改保存的蹄片名称格式 username_avatar
+        // 修改保存的蹄片名称格式 username_avatar
         if(fileName.indexOf(".")>=0){
             String suffix =  fileName.substring(fileName.indexOf("."));
-            fileName = subject.getPrincipal().toString() + "_avatar" + suffix;
+            fileName = shiroUser.getUserName() + "_avatar" + suffix;
         }
 
             File targetFile = new File(path, fileName);

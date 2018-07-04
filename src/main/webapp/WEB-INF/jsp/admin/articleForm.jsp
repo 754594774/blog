@@ -1,7 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <html>
 <head>
     <title>文章form</title>
@@ -65,7 +65,9 @@
                                        <c:if test="${article.allowComment == '1'}">checked</c:if>>
                             </div>
                             <div class="layui-form-item">
-                                <button class="layui-btn" lay-filter="publishArticle" lay-submit>立即发布</button>
+                                <shiro:hasRole name="admin">
+                                    <button class="layui-btn" lay-filter="publishArticle" lay-submit>立即发布</button>
+                                </shiro:hasRole>
                             </div>
                         </form>
                     </div>

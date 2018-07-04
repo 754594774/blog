@@ -1,6 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <html>
 <head>
     <title>分类form</title>
@@ -32,7 +33,9 @@
             </div>
             <div class="layui-form-item">
                 <div class="layui-input-block">
-                    <button class="layui-btn" lay-filter="editCategory" lay-submit>提交</button>
+                    <shiro:hasRole name="admin">
+                        <button class="layui-btn" lay-filter="editCategory" lay-submit>提交</button>
+                    </shiro:hasRole>
                 </div>
             </div>
         </form>

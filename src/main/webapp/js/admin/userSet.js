@@ -8,6 +8,7 @@ layui.use(['form','element','upload'], function(){
         $.ajax({
             url: "admin/updateUserInfo",
             data: {
+                userName:data.field.userName,
                 email: data.field.email,
                 nickname:data.field.nickname,
                 sex:data.field.sex,
@@ -52,8 +53,8 @@ layui.use(['form','element','upload'], function(){
             layer.alert("两次密码并不一致", {icon: 2});
             return false;
         }
-        if(data.field.pass.length < 6){
-            layer.alert("密码必须6到16个字符", {icon: 2});
+        if(data.field.pass.length < 5){
+            layer.alert("密码必须5到16个字符", {icon: 2});
             return false;
         }
         $.ajax({

@@ -43,10 +43,10 @@ public interface UserDao {
 
     /**
      * 根据用户名查找用户的角色
-     * @param username
+     * @param userId
      * @return 角色集合
      */
-    List<String> getRolesByUsername(String username);
+    List<String> getRolesByUserId(Integer userId);
 
     /**
      * 根据用户名查找用户密码
@@ -57,10 +57,10 @@ public interface UserDao {
 
     /**
      * 通过用户名查找用户权限集合
-     * @param username
+     * @param userId
      * @return
      */
-    List<String> getPermisionByUsername(String username);
+    List<String> getPermisisonByUserId(Integer userId);
 
     /**
      * 更新头像地址

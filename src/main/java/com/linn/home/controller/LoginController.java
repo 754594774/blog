@@ -1,6 +1,7 @@
 package com.linn.home.controller;
 
 import com.linn.frame.controller.BaseController;
+import com.linn.frame.shiro.realm.ShiroUser;
 import com.linn.home.entity.User;
 import com.linn.home.service.UserService;
 import org.apache.shiro.SecurityUtils;
@@ -101,14 +102,11 @@ public class LoginController extends BaseController{
      */
     @RequestMapping("/admin")
     public String toAdminIndex(Model model){
-        Subject subject = SecurityUtils.getSubject();
-        if(subject == null){
+        ShiroUser shiroUser = ShiroUser.getShiroUser();
+        if(shiroUser == null){
             return  "admin/login";
         }
-        User user = new User();
-        user.setUserName(subject.getPrincipal().toString());
-        user = userService.findUserByName(user.getUserName());
-        model.addAttribute(user);
+        model.addAttribute("user",shiroUser);
         return "admin/index";
     }
 

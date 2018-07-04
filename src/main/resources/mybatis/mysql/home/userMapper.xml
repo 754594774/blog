@@ -18,29 +18,6 @@
         <result property="gmtModified" column="gmt_modified"/>
     </resultMap>
 
-    <!--通过用户名查找用户-->
-    <select id="findUserByName" parameterType="String" resultMap="userResultMap">
-        SELECT id,nickname,user_name,sex,email,city,avatar,sign_msg
-        FROM blog_user
-        WHERE 1=1
-        AND user_name = #{value}
-    </select>
-
-    <!--验证用户是否存在-->
-    <select id="findUserByNameAndPass" parameterType="com.linn.home.entity.User" resultType="int">
-        SELECT count(1)
-        FROM blog_user
-        WHERE user_name = #{userName}
-        AND pass_word = #{passWord}
-    </select>
-
-    <!--修改用户头像地址-->
-    <update id="updateUserAvatar">
-        UPDATE blog_user
-        SET avatar=#{avatar}
-        WHERE user_name = #{userName}
-    </update>
-
     <!--修改用户个人信息-->
     <update id="updateUserByUserName">
         UPDATE blog_user
@@ -55,20 +32,29 @@
         WHERE user_name = #{userName}
     </update>
 
-    <!--根据用户名查找拥有的所有角色 shiro-realm需要使用-->
-    <select id="getRolesByUsername" parameterType="String" resultType="String">
-        SELECT role_name
-        FROM  blog_user_roles
+    <!--验证用户是否存在-->
+    <select id="findUserByNameAndPass" parameterType="com.linn.home.entity.User" resultType="int">
+        SELECT count(1)
+        FROM blog_user
         WHERE user_name = #{userName}
+        AND pass_word = #{passWord}
     </select>
 
-    <!--根据角色名查找拥有的所有权限 shiro-realm需要使用-->
-    <select id="getPermisionByUsername" parameterType="String" resultType="String">
-        SELECT permission
-        FROM blog_roles_permissions rp
-        JOIN blog_user_roles ur
-        ON rp.role_name = ur.role_name
-        WHERE ur.user_name ="001";
+    <!--通过用户名查找用户-->
+    <select id="findUserByName" parameterType="String" resultMap="userResultMap">
+        SELECT id,nickname,user_name,pass_word,sex,email,city,avatar,sign_msg,gmt_create,gmt_modified
+        FROM blog_user
+        WHERE 1=1
+        AND user_name = #{value}
+    </select>
+
+    <!--根据用户名查找拥有的所有角色 shiro-realm需要使用-->
+    <select id="getRolesByUserId" parameterType="Integer" resultType="String">
+        SELECT r.code
+        FROM blog_role r
+        JOIN blog_user_role ur
+        ON r.id = ur.user_id
+        AND ur.user_id = #{userId}
     </select>
 
     <!--根据用户名查找密码 shiro-realm需要使用-->
@@ -77,4 +63,21 @@
         FROM blog_user t
         WHERE t.user_name = #{userName}
     </select>
+
+    <!--根据角色名查找拥有的所有权限 shiro-realm需要使用-->
+    <select id="getPermisisonByUserId" parameterType="Integer" resultType="String">
+        SELECT p.code
+        FROM blog_user_role ur
+        JOIN blog_role_permission rp ON rp.role_id = ur.role_id
+        JOIN blog_permission p ON  p.id = rp.permission_id
+        WHERE ur.user_id = #{userId}
+    </select>
+
+    <!--修改用户头像地址-->
+    <update id="updateUserAvatar">
+        UPDATE blog_user
+        SET avatar=#{avatar}
+        WHERE user_name = #{userName}
+    </update>
+
 </mapper>
