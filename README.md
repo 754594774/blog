@@ -12,6 +12,6 @@
 
 ### 后端
 
-    * 示例网站：http://linn.site/admin/ 用户名/密码：admin/admin
+    * 示例网站：http://linn.site/admin/ 用户名/密码：guest/admin
 
     * 使用ssm搭建
