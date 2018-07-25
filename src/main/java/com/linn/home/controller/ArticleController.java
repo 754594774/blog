@@ -84,17 +84,26 @@ public class ArticleController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/toArticleList", method = RequestMethod.GET)
-    public String toArticleList(HttpServletRequest servletRequest,Model model) {
+    public String toArticleList(HttpServletRequest servletRequest,Model model) throws UnsupportedEncodingException {
 
         String categoryId =  servletRequest.getParameter("categoryId");
         String categoryTitle =  servletRequest.getParameter("categoryTitle");
         String searchContent =  servletRequest.getParameter("searchContent");
         String date =  servletRequest.getParameter("date");
 
+        //解码
+        if(!StringUtils.isEmpty(categoryId)) {
+            categoryId = java.net.URLDecoder.decode(categoryId, "UTF-8");
+        }
+        if(!StringUtils.isEmpty(date)) {
+            date = java.net.URLDecoder.decode(date,"UTF-8");
+        }
         if (!StringUtils.isEmpty(categoryTitle)) {
+            categoryTitle = java.net.URLDecoder.decode(categoryTitle,"UTF-8");
             model.addAttribute("title", categoryTitle);
         }
         if (!StringUtils.isEmpty(searchContent)) {
+            searchContent = java.net.URLDecoder.decode(searchContent,"UTF-8");
             model.addAttribute("searchContent", searchContent);
         }
         model.addAttribute("categoryId", categoryId);

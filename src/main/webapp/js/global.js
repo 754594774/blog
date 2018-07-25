@@ -2,18 +2,19 @@ var iframeId = "mainFrame";
 
 //控制Frame跳转
 function jump(url,type) {
-
+    var urlDe = window.encodeURI(url);
+    console.log(urlDe);
     if (url != null && url != '') {
         var webApp,frame;
         if(type == 0){//ifrmae所在页面调用
             webApp = document.getElementById("webApp");
             frame = document.getElementById(iframeId);
-            frame.src = url;
+            frame.src = urlDe;
         }
         if(type== 1){//iframe子页面调用
             webApp = parent.document.getElementById("webApp");
             frame = parent.document.getElementById(iframeId);
-            frame.src = url;
+            frame.src = urlDe;
         }
 
     }

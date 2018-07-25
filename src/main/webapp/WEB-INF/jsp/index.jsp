@@ -111,6 +111,9 @@
         var iframe = document.getElementById("mainFrame");
         try{
             var doc = iframe.contentDocument || ifr.document;
+            if(!doc.documentElement){
+                return;
+            }
             var cHeight = doc.documentElement.clientHeight;
             var sHeight = doc.documentElement.scrollHeight;
             var height  = Math.max(cHeight, sHeight);
@@ -120,7 +123,7 @@
             console.log(ex);
         }
     }
-    window.setInterval("reinitIframe()", 200);
+    window.setInterval("reinitIframe()", 500);
 </script>
 </body>
 </html>
