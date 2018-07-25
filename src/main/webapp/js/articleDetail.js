@@ -74,7 +74,6 @@ layui.use(['form', 'flow'], function(){
                 //pages为Ajax返回的总页数，只有当前页小于总页数的情况下，才会继续出现加载更多
                 next(lis.join(''), page < res.pages);
                 initCommentEvent();
-                setParentIframeHeight();
             });
         }
     });
@@ -98,7 +97,6 @@ layui.use(['form', 'flow'], function(){
             "  </div>\n" +
             "</li>";
         $("#pn").prepend(innerHtml);
-        setParentIframeHeight();
         $("#msg").val("");
         //发送ajax请求
         $.ajax({
@@ -315,7 +313,6 @@ function initCommentEvent() {
             //否则就是删除节点
             remove(comment);
         }
-        setParentIframeHeight();
     }
     //遍历所有状态消息
     for (var i = 0; i < lists.length-1; i++) {
@@ -358,7 +355,6 @@ function initCommentEvent() {
 
             this.parentNode.className = 'hf hf-on';
             this.value = this.value == '评论…' ? '' : this.value;
-            setParentIframeHeight();
         }
         //失焦事件
         textarea.onblur = function() {

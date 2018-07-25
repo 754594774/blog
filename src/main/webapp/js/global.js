@@ -1,6 +1,8 @@
 var iframeId = "mainFrame";
+
 //控制Frame跳转
 function jump(url,type) {
+
     if (url != null && url != '') {
         var webApp,frame;
         if(type == 0){//ifrmae所在页面调用
@@ -14,38 +16,6 @@ function jump(url,type) {
             frame.src = url;
         }
 
-    }
-}
-
-//iframe所在页面调用此方法：
-// 根据iframe子页面高度度控制iframe高度自适应
-//function setIframeHeight(){
-//    try{
-//        var iframe = document.getElementById(iframeId);
-//        if(iframe.attachEvent){
-//            iframe.height =  iframe.contentWindow.document.documentElement.height - 15;
-//            return;
-//        }else{
-//            iframe.height = iframe.contentDocument.body.height - 15;
-//            return;
-//        }
-//    }catch(e){
-//        throw new Error('setIframeHeight Error');
-//    }
-//}
-//iframe子页面调用此方法：根据子页面高度设置iframe高度
-function setParentIframeHeight(){
-    try{
-        var parentIframe = parent.document.getElementById(iframeId);
-        if(window.attachEvent){
-            parentIframe.height = this.document.documentElement.scrollHeight -15;
-            return;
-        }else{
-            parentIframe.height = this.document.body.scrollHeight -15;
-            return;
-        }
-    }catch(e){
-        throw new Error('setParentIframeHeight Error');
     }
 }
 

@@ -1,5 +1,4 @@
 layui.use(['form', 'layer'], function(){
-    setParentIframeHeight();
     var form = layui.form
         ,$ = layui.jquery;
 

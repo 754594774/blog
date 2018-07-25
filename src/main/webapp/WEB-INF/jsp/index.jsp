@@ -44,9 +44,8 @@
 
 <div class="layui-container">
     <div class="layui-row layui-col-space15">
-        <div class="layui-col-md8" style="height: 100%">
-                <IFRAME border=0 marginWidth=0 frameSpacing=0 marginHeight=0 src="toArticleList" frameBorder=0
-                        noResize scrolling="no" width=100% height=100% vspale="0" id="mainFrame" name="mainFrame"></IFRAME>
+        <div class="layui-col-md8">
+                <IFRAME src="toArticleList" frameBorder=0 scrolling="no" width=100% height=100% id="mainFrame"></IFRAME>
         </div>
         <div class="layui-col-md4">
             <%--通知--%>
@@ -106,5 +105,22 @@
     </p>
 </div>
 <input type="hidden" id="webApp" value="${rc.contextPath}"/>
+
+<script type="text/javascript">
+    function reinitIframe(){
+        var iframe = document.getElementById("mainFrame");
+        try{
+            var doc = iframe.contentDocument || ifr.document;
+            var cHeight = doc.documentElement.clientHeight;
+            var sHeight = doc.documentElement.scrollHeight;
+            var height  = Math.max(cHeight, sHeight);
+            var height  = Math.max(cHeight, sHeight);
+            iframe.height = height;
+        }catch (ex){
+            console.log(ex);
+        }
+    }
+    window.setInterval("reinitIframe()", 200);
+</script>
 </body>
 </html>
