@@ -2,7 +2,7 @@ var iframeId = "mainFrame";
 
 //控制Frame跳转
 function jump(url,type) {
-    var urlDe = window.encodeURI(url);
+    var urlDe = encodeURI(encodeURI(url));
     console.log(urlDe);
     if (url != null && url != '') {
         var webApp,frame;

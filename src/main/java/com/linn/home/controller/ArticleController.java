@@ -90,7 +90,6 @@ public class ArticleController extends BaseController {
         String categoryTitle =  servletRequest.getParameter("categoryTitle");
         String searchContent =  servletRequest.getParameter("searchContent");
         String date =  servletRequest.getParameter("date");
-
         //解码
         if(!StringUtils.isEmpty(categoryId)) {
             categoryId = java.net.URLDecoder.decode(categoryId, "UTF-8");
