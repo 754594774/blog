@@ -1,5 +1,6 @@
 layui.use(['form', 'layer'], function(){
     var form = layui.form
+        ,$ = layui.jquery
         ,layer = layui.layer;
 
     var editor = CKEDITOR.replace( 'content' );

@@ -7,6 +7,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>Fly-blog</title>
+    <meta name="description" content="Fly-blog 李难难的个人博客">
+    <meta name="keywords" content="blog,Fly,linn">
+    <meta name="author" content="李难难">
+    <link rel="icon" href="${rc.contextPath}/resources/images/title.ico" type="image/x-icon"/>
     <%@include file="./common/include.jsp" %>
     <link rel="stylesheet" type="text/css" href="${rc.contextPath}/css/global.css" />
     <link rel="stylesheet" type="text/css" href="${rc.contextPath}/css/index.css" />

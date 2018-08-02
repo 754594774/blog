@@ -5,6 +5,7 @@ import com.linn.frame.controller.BaseController;
 import com.linn.frame.entity.ParamDto;
 import com.linn.frame.entity.ResultBean;
 import com.linn.frame.entity.ResultTable;
+import com.linn.frame.shiro.realm.ShiroUser;
 import com.linn.frame.util.DateUtils;
 import com.linn.frame.util.SysContent;
 import com.linn.home.entity.*;
@@ -195,7 +196,8 @@ public class ArticleController extends BaseController {
     @RequestMapping(value = "/admin/publishArticle", method = RequestMethod.POST)
     public ResultBean publishArticle(Article article) {
         Subject subject = SecurityUtils.getSubject();
-        article.setAuthor(subject.getPrincipal().toString());
+        ShiroUser shiroUser = (ShiroUser) subject.getPrincipal();
+        article.setAuthor(shiroUser.getUserName());
         if (StringUtils.isEmpty(article.getId())) {
             //添加
             article.setGmtCreate(new Date());
@@ -303,7 +305,7 @@ public class ArticleController extends BaseController {
         sb.append("<script type=\"text/javascript\">");
         sb.append("window.parent.CKEDITOR.tools.callFunction(" + callback + ",'" + imageContextPath + "',''" + ")");
         sb.append("</script>");
-        writer(response, sb.toString());
+        writer(response, sb.toString(),ContentType.XML);
 
     }
 }

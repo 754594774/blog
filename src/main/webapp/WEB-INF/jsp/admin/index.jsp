@@ -3,7 +3,11 @@
 <head>
 
     <title>Fly-控制台</title>
+    <meta name="description" content="Fly-blog 李难难的个人博客">
+    <meta name="keywords" content="blog,Fly,linn">
+    <meta name="author" content="李难难">
     <%@include file="../common/include.jsp" %>
+    <link rel="icon" href="${rc.contextPath}/resources/images/title.ico" type="image/x-icon"/>
     <link rel="stylesheet" type="text/css" href="${rc.contextPath}/plugins/font-awesome/css/font-awesome.min.css" />
     <script type="text/javascript" src="${rc.contextPath}/js/admin/index.js"></script>
     <style>

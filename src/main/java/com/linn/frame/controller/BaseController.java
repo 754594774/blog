@@ -39,11 +39,10 @@ public class BaseController
      * @param response
      * @param content
      */
-    protected void writer(HttpServletResponse response, String content)
+    protected void writer(HttpServletResponse response, String content,String contentType)
     {
         PrintWriter writer = null;
-        response.setHeader("Content-Type", "text/xml;charset=UTF-8");
-        response.setContentType("text/html;charset=UTF-8");
+        response.setHeader("Content-Type", contentType);
         response.setCharacterEncoding(SysContent.DEFAULT_CODE);
         try
         {
@@ -58,5 +57,19 @@ public class BaseController
         {
             writer.close();
         }
+    }
+
+
+    /**
+     * 文件类型
+     *
+     * @author think_zhang
+     * @version 2014-12-3 下午3:23:43
+     */
+    public static class ContentType
+    {
+        public static final String JSON = "application/json;charset=UTF-8";
+
+        public static final String XML = "text/xml;charset=UTF-8";
     }
 }
